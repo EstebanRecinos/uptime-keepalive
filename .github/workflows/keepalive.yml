@@ -18,12 +18,9 @@ jobs:
         env:
           PING_URL: ${{ secrets.PING_URL }}
         run: |
-          if [ -z "$PING_URL" ]; then echo "Falta el secreto PING_URL"; exit 1; fi
-          for i in 1 2; do
-            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 60 "$PING_URL" || echo "fallo")
-            echo "Ping $i -> $code"
-            [ "$i" -eq 1 ] && sleep 300
-          done
+          echo "Ping 1 -> $(curl -s -o /dev/null -w '%{http_code}' --max-time 60 "$PING_URL" || echo fallo)"
+          sleep 300
+          echo "Ping 2 -> $(curl -s -o /dev/null -w '%{http_code}' --max-time 60 "$PING_URL" || echo fallo)"
 
       - name: Latido diario
         run: |
